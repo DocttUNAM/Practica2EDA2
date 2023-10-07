@@ -2,10 +2,42 @@
 \usepackage[utf8]{inputenc}
 \usepackage[Bjornstrup]{fncychap}
 \usepackage{graphicx}
+\usepackage{xcolor} % to access the named colour LightGray
+\definecolor{LightGray}{gray}{0.9}
+\usepackage{listings}
 \usepackage[spanish]{babel}
 \usepackage{apacite}
 \usepackage{array}
+\usepackage{minted}
+\usepackage{caption}
 \usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+\lstset{style=mystyle}
 \bibliographystyle{apacite}
 \selectlanguage{spanish}
 \input{Portada.tex}
@@ -322,7 +354,7 @@ La elección entre las clases HashMap, Hashtable, LinkedHashMap o TreeMap para i
 \end{itemize}
 \chapter{Desarrollo}
 \section*{EJERCICIOS DEL PROYECTO}
-\subsection*{Búsqueda Lineal en listas de objetos}
+\subsection*{Búsqueda Lineal y Binaria en listas de objetos}
 \begin{enumerate}
     \item Elaboración de Clases
     \begin{itemize}
@@ -373,23 +405,134 @@ Esta clase es el menú donde se ejecutarán todas las opciones, este menú conti
     
 \end{figure}
 \subsubsection{Búsqueda Lineal}
-Para la búsqueda lineal, en su clase se crearon los atributos privados:
-\textbf{Boolean rb
-LinkedList<Integer> ind
-int c=0}
+Para la búsqueda lineal, en su clase se crearon los atributos privados:\\
+\textbf{Boolean rb}\\
+\textbf{LinkedList<Integer> ind}\\
+\textbf{int c=0}\\
 
 Estos atributos nos servirán para guardar los datos que necesitamos, es decir, si el objeto es encontrado en rb se guardará un True, en la LinkedList se guardaran todas las posiciones en las que el objeto es encontrado y en el entero se guardaran la cantidad de veces que el elemento haya sido encontrado.
-
+\newpage
 El método que realiza la búsqueda llamado BLB, devuelve un objeto de tipo BL, esto porque el objeto BL será aquel que contenga los atributos mencionados y los mostrará como salida en el programa.
 
 El método BLB, recibe un Object y una List<?>, es decir, recibe dos tipos genéricos uno de objeto y otro de lista, su propósito es que este mismo método pueda recibir una lista de Asignaturas o una lista de Alumnos y el objeto genérico recibe como objeto el atributo que se va a comparar para hacer la búsqueda, en caso de un Alumno recibirá un String y en caso de Asignatura recibirá un Integer.
-La parte esencial del código es la siguiente:
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.75\linewidth]{Imagen2.png}
-    \caption{Funcionamiento interno del codigo}
-    \label{fig:enter-label}
+La parte esencial del código es la siguiente:             
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+for (Object i : list) {
+    if (i.equals(v)) {
+        b = true;
+        count++;
+        index.add(j);
+    }
+    j++;
+}
+BL OBL = new BL(b, index, count);
+return OBL;
+\end{lstlisting}
+\caption{Algoritmo de búsqueda Lineal}
 \end{figure}
+\\Esta parte del código llena los atributos que posteriormente construirán el objeto mencionado para finalmente devolverlo:
+Algo a destacar es el método equals, pues este método es que nos sirve para comparar el atributo con lo que estemos buscando para usarlo fue necesario sobrescribir este método tanto en la clase de Asignatura como en la Clase Alumno quedando de la siguiente manera.
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+    @Override
+    public boolean equals(Object obj) {
+    return this.getAlumno().equals((String)obj);
+    }
+\end{lstlisting}
+\caption{Método sobrescrito de Alumno: equals}
+\end{figure}
+\\Como se ve, recibe un objeto genérico, para este caso se sabe que lo que compararemos será el nombre del alumno, es decir, un String por lo que el objeto genérico se castea para convertirse a un objeto de tipo String, una vez esto se utiliza el método equals de la clase String para determinar si ambos Strings son iguales; el método sobrescrito solo hace que lo que se evalúe sea el atributo nombre del objeto, para esto el getter getAlumno devuelve el nombre del alumno el cual es una String, este String tiene su propio método equals para determinar si dos Strings son iguales por lo que se usa con el objeto genérico casteado/convertido a una String si son iguales el método devolverá un true y si no un false.
+Esta misma lógica se aplica para el equals de Asignatura únicamente que aquí casteamos el objeto a un Integer y lo pasamos a entero para que pueda ser comparado de la manera usual:
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+    @Override
+    public boolean equals(Object obj) {
+        Integer entero = (Integer) obj;      
+    return this.clave == entero.intValue(); 
+}
+\end{lstlisting}
+\caption{Método sobrescrito de Asignatura: equals}
+\end{figure}
+Una vez esto en la clase de la búsqueda lineal se tiene un método de clase llamado menú, el cual recibirá las dos listas, tanto la de alumnos como la de asignaturas y se crearán los dos genéricos (lista y objeto), una vez esto se le solicita al alumno que escoja que quiere buscar si escoge alumno la lista genérica tomará a la lista de alumnos y el objeto genérico recibe un String, si escoge Asignatura la lista genérica tomara la lista de asignaturas y el objeto recibirá un Integer.
+Después de esto se ejecuta el método BLB explicado anteriormente y el objeto devuelto será guardado en un objeto de tipo BL(búsqueda lineal) llamado OBL(Objeto Búsqueda Lineal).
+
+Ahora el usuario tendrá la posibilidad de escoger que quiere mostrar
+\begin{enumerate}
+    \item Búsqueda Booleana (Encontrado, No encontrado)
+    \item Índice encontrado (Los índices de la lista en donde se localiza el objeto)
+    \item Cuántas veces fue encontrado (Mostrará la cantidad de incidencias que tenga el objeto)
+    \item Imprime todos los datos.(Mostrara el numero de veces, los índices y los objetos en cada índice pues estos pueden tener sus demás atributos diferentes)
+\end{enumerate}
+\paragraph{Método sistema de impresión:}
+Este método es interesante pues es un método de instancia, el cual recibirá la lista original y utilizara los atributos llenados en el objeto para ir imprimiendo todos los índices de los objetos encontrados, recibe una lista genérica por lo que puede usarse para imprimir cualquier objeto tanto Alumno como Asignatura y emplea el método ToString para imprimir todos los atributos del objeto localizado.
+\newpage
+\subsubsection{Búsqueda Binaria:}
+Para la búsqueda binaria no se empleó ningún atributo de instancia o clase, pues todas las respuestas son generadas por los métodos de clase creados, solo tiene un atributo de clase que es el scanner que se usará para el registro de datos.
+\paragraph{Métodos CompereTo():}
+Estos métodos son esenciales para que la ejecución del algoritmo de búsqueda binaria funcione, pues es lo que determina cuando un objeto es mayor o menor que otro caso, para esto se implementó la interfaz Comparable que habilita el método CompareTo para sobrescribirlo según lo que queramos evaluar.
+Para la clase Alumno quedó sobrescrito de tal manera que solo evalúa el atributo que contiene el nombre del alumno:
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+    @Override
+    public int compareTo(Alumno A2) {
+       return this.getAlumno().compareTo(A2.getAlumno());
+    }
+\end{lstlisting}
+\caption{Método sobrescrito de Alumno: CompareTo}
+\end{figure}
+Se usa el getter para obtener el String y usar el propio compareTo del string con el string del otro objeto a recibir, así retornado el resultado que puede ser positivo para mayor que, negativo para menor que y cero para valores iguales.
+Para la clase Asignatura quedo sobrescrito de tal manera que solo use la clave para compararlo:
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+    @Override
+    public int compareTo(Asignatura A2) {
+        return Integer.compare(this.getClave(), A2.getClave());
+    }
+\end{lstlisting}
+\caption{Método sobrescrito de Asignatura: CompareTo}
+\end{figure}
+\\Utilizando el compare de la clase Integer para comparar los dos enteros, devolviendo así un valor negativo para menor que, un valor positivo para mayor que y cero para valores iguales. 
+\newpage 
+\paragraph{Método BBI (Búsqueda Binaria index)}
+Este método devolverá un entero y usa \(<\)T extends Comparable \(<\)T\(>\)\(>\) para definir un objeto genérico comparable, pues recibirá dos parámetros de ese tipo un objeto genérico comparable v y una lista de objetos comparables list, esta lista cabe destacar que debe estar ordenada, para esto se definió a todas las clases como comparables (lo anteriormente mencionado) y se reescribieron los métodos de CompareTo, en el caso de Asignatura se reescribir de tal manera que solo compara las claves de ambos objetos, y para el caso de Alumno solo compare el nombre de cada alumno, así al usar Collections.Sort() este método se basará en los métodos CompareTo sobrescritos para ir ordenando las colecciones.
+El método inicializa una variable b en -1 pues esta es la variable que registra el índice por lo que si no lo encuentra devolverá un -1 que indicará que no hay tal objeto buscado, si la lista está vacía retorna -1.
+Después define una variable mid el cual es el valor que se encuentra en medio de la lista y empieza el algoritmo, se obtiene el objeto en el index mid y a este se le hace un CompareTo con el objeto genérico que fue recibido de la siguiente manera:
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+ if(v.compareTo(list.get(mid))==0){
+                b=mid;
+              return b;      
+        }else if(v.compareTo(list.get(mid))>0){
+            aux+=BBI(v, list.subList(mid+1, list.size()));
+            if(aux==-1){
+                 return -1;  
+            }else{
+              
+                b=mid+1+aux;
+            }
+        }else if(v.compareTo(list.get(mid))<0){
+            b=0;
+            b+=BBI(v, list.subList(0,mid));
+        }
+\end{lstlisting}
+\caption{Método sobrescrito de Asignatura: CompareTo}
+\end{figure}
+Este método lo que hace es regresar un valor negativo si el objeto es menor, un valor positivo si es mayor y cero si los valores son iguales, por lo que así define cómo se va partiendo la lista en cada llamada recursiva.
+
+Para cada llamada recursiva se va definiendo nuevamente b para ir alineando el index que debe llevar según como se parta la lista en caso de que la lista vaya hacia los indices después del valor central se usa una variable auxiliar que evalúa si el valor si fue encontrado para que la variable que registra el índice se ajuste y si no devuelva -1 sin el ajuste del índice pues no es necesario ya que no encontró el valor.
+
+Al final devuelve el index en el que encontró el elemento, este elemento puede ser el de en medio, la primera incidencia o la última incidencia por lo que para encontrarlas todas se usa el método EncontrarIndicesdetodaslasincidencias.
+
+
+
+
 
 
 \chapter{Conclusiones}
