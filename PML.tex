@@ -10,8 +10,8 @@
 
 \bibliographystyle{apacite}
 \selectlanguage{spanish}
+\input{Portada.tex}
 \addto\captionsspanish{\renewcommand{\abstractname}{Abstract}}
-
 \begin{document}
 
 
@@ -20,15 +20,11 @@
 
   
 
-  \input{Portada.tex}
+ 
 
 
   \begin{abstract}
-  This information presents a simple application of linear transformations in the study of synchronization of physical systems. To fully understand the presented information, certain theoretical knowledge in the field of linear transformations and synchronization of physical systems is required. Key concepts include linear transformations, their properties, the concept of kernel or null space, synchronization of systems, graphs, directed spanning trees, and properties of the Laplacian matrix. These concepts provide the necessary theoretical foundation to comprehend and analyze the application of linear transformations in the study of synchronization of physical systems.
 
-The development section includes two activities. In Activity 1, a network of 6 robots described by Newton's second law is considered, and the graph and incidence matrix are presented. The Laplacian matrix is calculated, and its eigenvalues and kernel are determined. In Activity 2, a network of 8 robots is analyzed using similar steps. The graph, incidence matrix, Laplacian matrix, eigenvalues, and kernel are obtained. MATLAB simulations are performed to visualize the convergence of the nodes in both activities.
-
-Overall, this information provides a practical demonstration of using linear transformations and graph theory concepts for studying the synchronization of physical systems.
   \end{abstract}
     
 
@@ -47,11 +43,31 @@ En general, esta información proporciona una demostración práctica del uso de
   
 
 \chapter{Introducción} 
-    \section{Objetivo}
+    \section*{Objetivo}
     Que el alumno desarrolle aplicaciones para la búsqueda por comparación de llaves y la
     transformación de llaves junto con la solución de colisiones
-    \section{investigación}
+    \section*{investigación}
       \subsection*{Framework}
+      Un framework es una agrupación de clases e interfaces que proporcionan una arquitectura lista para desarrollar software. Por ende, si se quiere implementar una nueva característica o clase, no es necesario definir un nuevo framework si ya existe uno. No obstante, una buena práctica en el paradigma orientado a objetos es incluir un framework con una colección de clases tal que todas las clases realicen el mismo tipo de operaciones.
+      \subsection*{Colecciones en Java}
+      Cualquier grupo de objetos individuales que se representa como una sola unidad se le conoce como una colección de objetos. En el lenguaje de programación Java, en Java Development Kit 1.2 se definió un modelo denominado Collection Framework que contiene todas las clases de colección con sus respectivas interfaces. De ahí que la interfaz de colección java.util.Collection y la interfaz de mapa java.util.Map son las dos interfaces principales de las clases de colección en Java.
+      \subsection*{Collection Framework en Java}
+      Antes de que existiera el Collection Framework, es decir, antes de JDK 1.2, los métodos estándar para agrupar objetos en Java, o colecciones, eran Arrays, Vectors o Hashtables. Todas estas colecciones no tenían una interfaz en común. Por consiguiente, aunque el objetivo principal de todas las colecciones es el mismo, la implementación de todas estas colecciones se definió de forma independiente y en consecuencia no había ninguna relación entre ellas. Además, era muy difícil para los programadores recordar los diferentes métodos, sintaxis y constructores existentes para cada clase de colección.
+      \subsection*{Ventajas del Collection Framework en Java}
+      Como ya se mencionó anteriormente, la falta de un framework dio lugar a las desventajas descritas en la sección anterior. Sin embargo, luego de que se declaró el framework se comenzaron a presentar ventajas.
+      \begin{itemize}
+          \item \textbf{API consistente:} la API tiene un conjunto básico de interfaces como Collection, Set, List o Map, donde todas las clases, ArrayList, LinkedList, Vector, que implementan estas interfaces tienen métodos en común.
+          \item \textbf{Reduce la complejidad al programar:} un programador ya no tiene que preocuparse por el diseño de la Colección, lo cual le permite priorizar el resto de su programa. Por lo anterior, uno de los principales aspectos del paradigma orientado a objetos, el cual es abstracción se logró implementar satisfactoriamente.
+          \item \textbf{Aumenta la eficiencia y la calidad del programa:} la eficiencia se ve incrementada gracias a la proporción de implementaciones de alto rendimiento para las estructuras de datos junto con algunos algoritmos útiles, ya que, en este caso, el programador no necesita preocuparse por elegir la mejor implementación de una estructura de datos particular. Simplemente puede utilizar la implementación predefinida y así aumentar el rendimiento de su algoritmo/programa.
+      \end{itemize}
+      \newpage
+      \subsection*{Jerarquía del Collection Framework en Java}El paquete java.util contiene todas las clases e interfaces que requiere el Collection Framework. Asimismo, el Collection Framework contiene una interfaz conocida como Iterable, la cual proporciona un iterador para recorrer todas las colecciones. Todas las colecciones que amplían la interfaz, aumentan al mismo tiempo el rango del iterador y los métodos de esta. La siguiente imagen ilustra la jerarquía del Collection Framework.
+    \begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Collection-Framework-1.png}
+    \caption{GeeksforGeeks. (2023). Jerarquía del Collection Framework en Java[PNG].GeeksforGeeks.}
+\end{figure}
+
 \newpage
 \chapter{Desarrollo}
 
