@@ -398,17 +398,43 @@ Esta clase implementa el Comparable esto para definir que los objetos creados so
 \paragraph{Clase Main:}
 Esta clase es el menú donde se ejecutarán todas las opciones, este menú contiene dos Linked List una de alumnos y otra de asignaturas para tener guardados todos los objetos en los que se buscará, posteriormente se despliega un menú que muestra todas las opciones disponibles:
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.75\linewidth]{Menu.png}
-    \caption{Opciones del menú}
-    
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+      do{
+                Utilerias.clearScreen();
+                System.out.println("Bienvenido al sistema de busqueda de alumnos");
+                System.out.println("Escoge una opcion");
+                System.out.println("1.-Agregar Alumno");
+                System.out.println("2.-Agregar materia");
+                System.out.println("3.-Imprimir Listas");
+                System.out.println("4.-Busqueda lineal");
+                System.out.println("5.-Busqueda Binaria");
+                s=cin.nextInt();
+                switch (s) {
+                case 1: a.add(Alumno.crear());break;
+                case 2: m.add(Asignatura.crear()); break;
+                case 3: System.out.println("1.-Lista Alumnos 2.-Lista Materias"); s=cin.nextInt(); if(s==1){Imprimir(a);}else{Imprimir(m);} ; break;
+                case 4: BL.menu(a, m);break;
+                case 5: BB.menu(a, m);break;
+                default:
+                return;
+            }
+        }while(true);
+\end{lstlisting}
+\caption{Menú de opciones}
 \end{figure}
 \subsubsection{Búsqueda Lineal}
 Para la búsqueda lineal, en su clase se crearon los atributos privados:\\
-\textbf{Boolean rb}\\
-\textbf{LinkedList<Integer> ind}\\
-\textbf{int c=0}\\
+\begin{figure}[htbp]
+\centering
+\begin{lstlisting}[language=Java, frame=lines, framesep=2mm, basicstyle=\footnotesize\ttfamily, numbers=left]
+     private boolean rb;
+     private LinkedList<Integer> ind;
+     private int c=0;
+\end{lstlisting}
+\caption{Atributos clase búsqueda lineal}
+\end{figure}
 
 Estos atributos nos servirán para guardar los datos que necesitamos, es decir, si el objeto es encontrado en rb se guardará un True, en la LinkedList se guardaran todas las posiciones en las que el objeto es encontrado y en el entero se guardaran la cantidad de veces que el elemento haya sido encontrado.
 \newpage
@@ -559,8 +585,59 @@ Este método recibe la lista de índices y una lista de genéricos para así imp
 \begin{figure}[h]
     \centering
     \includegraphics[width=1\linewidth]{Imagen4.png}
-    \caption{Menu}
+    \caption{Menú}
 \end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen5.png}
+    \caption{Creación de Alumno Daniel}
+
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen6.png}
+    \caption{Creación Alumno Daniel 2}
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen7.png}
+    \caption{Creacion Alumno Isaac}
+    
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen8.png}
+    \caption{Creación Alumno Sebastian}
+    
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen9.png}
+    \caption{Creación Alumno Alonso}
+    
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen10.png}
+    \caption{Impresion}
+    
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \chapter{Conclusiones}
 \textbf{Hernandez Gallardo Daniel Alonso} \\
 \newpage
