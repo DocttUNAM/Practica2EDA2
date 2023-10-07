@@ -239,14 +239,127 @@ Esta clase implementa la interfaz Set, SortedSet y NavigableSet utilizando una e
     \item \textbf{descendingSet()} devuelve una vista inversa del conjunto, donde los elementos se almacenan en orden inverso.
 \end{itemize}
 
+\subsubsection{Aspectos a tomar en cuenta para elegir alguna de las clases de Set}
+Para las clases mencionadas anteriormente, se debe definir cuál queremos usar según el problema que se nos presente y que encaje con las características especiales de cada Set. Por ejemplo, en el siguiente problema (B. Sereja and Suffixes Codeforces Problem 368B):
+Se nos presenta una situación en la que se nos da un conjunto de números que tiene cualquier orden y contiene números repetidos, y se no da otro conjunto de números que representan índices del anterior conjunto de números brindados, queremos saber la cantidad de números diferentes que se encuentren después de cada índice que se nos ha brindado, además el problema debe ser solucionado en máximo un segundo para entradas de 105.
+La situación es clara, necesitamos un Set, pues la respuesta será su tamaño después de recorrer la colección de números desde el índice brindado, pero además de esto necesitamos que el Set sea rápido al momento de realizar sus operaciones para cumplir con el límite de un segundo, y la clase de la interfaz Set que cumple con estas características es el HashSet, dado que este tiene las operaciones más rápidas y a su vez cumple con la función, como el resto de clases en la interfaz, de no admitir números repetidos. Por lo anterior, el código en el lenguaje de programación Java queda de la siguiente manera.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Imagen1.png}
+    \caption{
+Hernández, G. D. A. (2023). \textit{Solución a B. Sereja and Suffixes Codeforces Problem 368B} [PNG]. Herramienta de Recortes.}
+\end{figure}
+Cabe destacar que también se uso programación dinámica para calcular todas las respuestas en una sola pasada de la colección, así el índice que se nos proporciona por la segunda colección será el índice que contenga la respuesta en nuestro arreglo de soluciones, en este caso se le resta uno para adecuarse a los índices de los arreglos que son de 0-n, porque los índices de la segunda colección son desde 1-n.
+Como ya se dijo, la elección entre la clase \textit{HashSet, LinkedHashSet y TreeSet} para implementar la interfaz \textit{Set} en \textbf{Java} depende de nuestros requerimientos junto con el rendimiento y comportamiento que busquemos. Por ende, nos conviene tener en cuenta ciertos aspectos a la hora de elegir alguna de estas clases para nuestra aplicación.
+
+\begin{itemize}
+    \item \textbf{HashSet:}
+    \begin{itemize}
+    \item Se suele utilizar cuando se necesita una colección de elementos únicos sin tomar en cuenta el orden de inserción ni tampoco un orden específico para los elementos. Asimismo, es la clase más rápida para la mayoría de las operaciones, como inserción, eliminación y búsqueda.
+    \item En lo que al rendimiento se refiere, un objeto de la clase \textit{HashSet} es altamente eficiente para las operaciones mencionadas anteriormente, ya que utiliza una tabla hash para el almacenamiento. Sin embargo, no garantiza ningún orden específico de los elementos.
+    \end{itemize}
+    \item LinkedHashSet:
+    \begin{itemize}
+    \item Se recomienda utilizar si quieres mantener el orden de inserción de los elementos, y en consecuencia los elementos también se pueden recuperar en el mismo orden en que se insertaron.
+    \item En cuanto al rendimiento la clase\textit{ LinkedHashSet} es un poco más lenta que la clase\textit{ HashSet} debido a que mantiene el orden de inserción, pero es más rápida que la clase \textit{TreeSet}.
+    \end{itemize}
+    \item TreeSet:
+    \begin{itemize}
+    \item Se utiliza usualmente cuando necesitamos que los elementos se almacenen y recuperen de acuerdo con el orden natural o con algún orden personalizado. Por consiguiente, la clase T\textit{reeSet} garantiza que los elementos estén ordenados.
+    \item Con relación al rendimiento de la clase \textit{TreeSet}, dado que esta utiliza un \textit{Red-Black Tree} para el almacenamiento, provoca que las operaciones de inserción, eliminación y búsqueda tengan un rendimiento ligeramente más lento que la clase \textit{HashSet} y \textit{LinkedHashSet.} No obstante, tener un orden nos puede ser muy útil para ciertas aplicaciones.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Interfaz Map}
+Un Map es una estructura de datos que admite el par clave-valor para mapear los datos. Esta interfaz no admite claves duplicadas porque la misma clave no puede tener múltiples asignaciones; sin embargo, permite valores duplicados en claves diferentes. Un Map es útil cuando existen datos con los que queremos realizar operaciones en base a una clave. Además, la interfaz Map se puede implementar mediante diversas clases como HashMap, Hashtable y LinkedHashMap con la creación de una instancia de alguna de estas.
+\paragraph{Clase HashMap}
+Esta clase es una implementación de la interfaz Map basada en una tabla hash. Por ende, nos proporciona todas las operaciones opcionales de Map y permite valores null junto con claves null. Por otro lado, la clase HashMap es similar a la clase Hashtable, con la diferencia de que la clase HashMap no está sincronizada y permite valores nulos. Lamentablemente, esta clase no ofrece garantía en cuanto al orden del mapa; en particular, no garantiza que el orden se mantendrá constante en el tiempo.
+Asimismo, esta implementación nos proporciona un rendimiento en tiempo constante para las operaciones básicas get y put, suponiendo que la función hash disperse los elementos adecuadamente entre los depósitos.
+\paragraph{Clase Hashtable}
+Esta clase implementa una tabla hash, que asigna claves a valores. Cualquier objeto no nulo se puede utilizar como clave o como valor. Para almacenar y recuperar objetos de una tabla hash con éxito, los objetos utilizados como claves deben implementar el método hashCode y el método equals.
+Consecuentemente, una instancia de la clase Hashtable tiene dos parámetros que afectan su rendimiento: initial capacity y load factor. El load factor es la cantidad de depósitos en la tabla hash y la initial capacity es simplemente la capacidad en el momento en que se crea la tabla hash. Hay que tener en cuenta que la tabla hash está abierta: en el caso de una colisión, un único depósito almacena varias entradas, que deben buscarse secuencialmente. El load factor es una medida de qué tan llena se permite que esté la tabla hash antes de que su capacidad aumente automáticamente. Por lo anterior, los parámetros de initial capacity y load factor son meros consejos para la implementación.
 
 
+\paragraph{Clase LinkedHashMap}
+La clase implementa una tabla hash junto con una lista ligada de la interfaz Map, por lo cual, se cuenta con un orden de iteración predecible. Además, esta clase se diferencia de la clase HashMap porque mantiene una lista doblemente ligada que recorre todas sus entradas. Esta lista doblemente ligada define el orden de iteración, que normalmente es el orden en que se insertaron las claves en el mapa. Cabe destacar que el orden de inserción no se ve afectado si se vuelve a insertar una clave en el mapa.
+Asimismo, la clase evita los pedidos no especificados y generalmente caóticos proporcionados por las clases HashMap y Hashtable, sin incurrir en el mayor costo asociado con TreeMap. Por consiguiente, esta clase se puede utilizar para producir una copia de un mapa que tenga el mismo orden que el original, sin importar la implementación del mapa original.
+\subsubsection{Interfaz SortedMap}
+La interfaz SortedMap amplía la interfaz Map con una estipulación adicional de un orden total de claves. Por ello, las claves se ordenan por orden natural o en base a un Comparator especificado en el momento de la construcción, de acuerdo con el constructor utilizado. En consecuencia, todas las claves deben ser comparables.
+\paragraph{Clase Treemap}
+Esta clase usa un\textit{ Red-Black Tree} basado en la interfaz \textit{NavigableMap} y \textit{SortedMap}, el cual se ordena en el orden natural de las Keys o por un comparador definido por el programador. Esta implementación garantiza un costo de tiempo de log(n) para las operaciones de búsqueda, obtención, inserción y eliminación de los elementos. Sin embargo, esta clase no está sincronizada. Por otra parte, dada su naturaleza al igual que el \textit{TreeSet} esta clase posee métodos exclusivos que nos permiten acceder a ciertos datos de manera más rápida.
+\begin{itemize}
+    \item \textbf{firstKey()} devuelve la clave del primer elemento en el mapa, que es la clave mínima en orden natural.
+    \item \textbf{lastKey()} devuelve la clave del último elemento en el mapa, que es la clave máxima en orden natural.
+    \item \textbf{headMap(K toKey)} devuelve una vista del mapa que contiene todas las entradas cuyas claves son menores que toKey.
+    \item \textbf{tailMap(K fromKey)} devuelve una vista del mapa que contiene todas las entradas cuyas claves son mayores o iguales a fromKey.
+    \item \textbf{subMap(K fromKey, K toKey)} devuelve una vista del mapa que contiene todas las entradas cuyas claves están en el rango [fromKey, toKey), es decir, desde fromKey (inclusivo) hasta toKey (exclusivo).
+    \item \textbf{comparator()} devuelve el Comparator utilizado para ordenar las claves en el mapa. Si el mapa utiliza el orden natural, este método devolverá null.
+\end{itemize}
 
-
-
-
-
+\subsubsection{Aspectos a tomar en cuenta para elegir alguna de las clases de Map}
+La elección entre las clases HashMap, Hashtable, LinkedHashMap o TreeMap para implementar la interfaz Map en Java depende de los requerimientos que se nos soliciten junto con el rendimiento y comportamiento que se busque. Por lo cual, nos conviene tener presentes ciertos aspectos al momento de elegir alguna de estas clases para nuestra aplicación.
+\begin{itemize}
+    \item HashMap:
+    \begin{itemize}
+    \item Se recomienda utilizar cuando necesites una estructura de datos de mapeo clave-valor con acceso rápido a los elementos. Es la elección predeterminada en la mayoría de los casos, ya que ofrece un buen equilibrio entre rendimiento y funcionalidad.
+    \item El rendimiento de esta clase es altamente eficiente para la mayoría de las operaciones, como inserción, eliminación y búsqueda, pero no garantiza ningún orden específico de las claves.
+    \end{itemize}
+    \item Hashtable:
+    \begin{itemize}
+    \item Aunque la clase Hashtable es similar a la clase HashMap en términos de funcionalidad, se utiliza con menos frecuencia en aplicaciones modernas debido a su sincronización, que puede degradar el rendimiento en entornos multihilo. Por ello, si necesitas un mapa sincronizado, thread-safe, puedes optar por la clase Hashtable. De lo contrario, la clase HashMap es preferible.
+    \item El rendimiento de la clase Hashtable es menor que el de la clase HashMap debido a la sincronización. Por ende, si no requieres de la sincronización, la clase HashMap será más rápida.
+    \end{itemize}
+    \item LinkedHashMap:
+    \begin{itemize}
+    \item Si deseas mantener el orden de inserción de las claves o el orden en el que se accede a los elementos, se recomienda utilizar la clase LinkedHashMap.
+    \item El rendimiento de la clase LinkedHashMap es ligeramente más lento que el de la clase HashMap, ya que debe realizar un seguimiento del orden de inserción o acceso. Sin embargo, es más rápido que el de la clase TreeMap.
+    \end{itemize}
+    \item TreeMap:
+    \begin{itemize}
+    \item Se recomienda utilizar la clase TreeMap cuando requieras que las claves sean almacenadas de acuerdo al orden natural o de acuerdo con un orden personalizado. Por lo anterior, esta clase garantiza un orden ascendente o descendente de las claves.
+    \item El rendimiento de la clase TreeMap es menos eficiente que el de las clases HashMap y LinkedHashMap en la mayoría de las operaciones debido a la estructura de árbol utilizada para mantener el orden. No obstante, ofrece la ventaja de un acceso ordenado a las claves.
+    \end{itemize}
+\end{itemize}
 \chapter{Desarrollo}
+\section*{EJERCICIOS DEL PROYECTO}
+\subsection*{Búsqueda Lineal en listas de objetos}
+\begin{enumerate}
+    \item Elaboración de Clases
+    \begin{itemize}
+        \item Elabora las clases necesarias donde definas los atributos y métodos de un objeto para crear el tipo de dato Alumno y el tipo de dato Asignatura. Asegúrate de considerar lo siguiente:
+        \begin{itemize}
+            \item Atributos privados.
+            \item Acceso a los atributos a través de getters y setters.
+            \item Constructor con parámetros.
+        \end{itemize}
+    \end{itemize}
+
+    \item Clase Búsqueda Lineal
+    \begin{itemize}
+        \item Elabora una clase llamada BúsquedaLineal similar a la práctica 4, en la cual se implementarán métodos que devuelvan objetos y que reciban los siguientes parámetros:
+        \begin{enumerate}
+            \item Nombre (búsqueda por nombre del alumno).
+            \item Clave (búsqueda por clave de la asignatura).
+        \end{enumerate}
+    \end{itemize}
+
+    \item Clase Principal
+    \begin{itemize}
+        \item En la clase principal del proyecto, crea una lista de asignaturas y una lista de alumnos. Luego, comprueba el funcionamiento de los métodos realizados para las búsquedas.
+    \end{itemize}
+
+    \item Búsqueda Binaria (Opcional)
+    \begin{itemize}
+        \item Para obtener puntos extras en el proyecto, puedes realizar la búsqueda binaria. Deberás investigar cómo ordenar la lista de alumnos o la lista de asignaturas a partir de alguno de sus atributos y posteriormente aplicar el algoritmo de búsqueda binaria.
+    \end{itemize}
+\end{enumerate}
+El algoritmo de búsqueda lineal en su esencia es sencillo, solo consta de recorrer toda la colección en busca de los elementos que coincidan con lo que buscamos, lo difícil fue la parte de implementación en el lenguaje Java pues se requirió de investigar y conocer cómo hacer distintas adaptación necesarias para la correcta ejecución del programa.
+Para este ejercicio se crearon 2 paquetes, el paquete Escuela, el cual tiene las clases de Asignatura y Alumno lo que nos dará la posibilidad de crear los objetos necesarios para ser insertados en una lista y después buscarlos.
+Y el paquete Búsquedas que poseen la búsqueda lineal y la búsqueda binaria.
+
+
+
+
 
 \chapter{Conclusiones}
 \textbf{Hernandez Gallardo Daniel Alonso} \\
