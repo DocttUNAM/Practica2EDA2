@@ -356,9 +356,40 @@ La elección entre las clases HashMap, Hashtable, LinkedHashMap o TreeMap para i
 El algoritmo de búsqueda lineal en su esencia es sencillo, solo consta de recorrer toda la colección en busca de los elementos que coincidan con lo que buscamos, lo difícil fue la parte de implementación en el lenguaje Java pues se requirió de investigar y conocer cómo hacer distintas adaptación necesarias para la correcta ejecución del programa.
 Para este ejercicio se crearon 2 paquetes, el paquete Escuela, el cual tiene las clases de Asignatura y Alumno lo que nos dará la posibilidad de crear los objetos necesarios para ser insertados en una lista y después buscarlos.
 Y el paquete Búsquedas que poseen la búsqueda lineal y la búsqueda binaria.
+\subsubsection{Descripción de clases}
+\paragraph{Clase Alumno:}
+Esta clase implementa el Comparable esto para definir que los objetos creados son comparables y asi admitir el método CompareTo.La clase posee 3 atributos un contador estático que determinara cuantos objetos Alumno hay, un String Alumno que contendrá el nombre del alumno y un entero en cuenta que poseerá el número de cuenta del alumno así diferenciando los objetos que posean el mismo nombre; dos constructores uno que inicializa todos los atributos y otro que solo inicializa el atributo nombre, este se utilizará posteriormente para la búsqueda binaria, posee métodos de acceso, un método de clase que sirve para llenar los datos del alumno, crea el objeto y lo devuelve para ser guardado en la lista; y 3 métodos sobreescritos, el ToString que contendrá los formatos de impresión del objeto, un método equals que comprobara que el atributo nombre sea igual al nombre que buscamos (esto para la búsqueda lineal), y un método compareTo que nos servirá para poder ordenar la lista y determinar si un objeto es mayor o menor que otro según qué atributo que nos servirá para crear la búsqueda binaria.
 
 
+\paragraph{Clase Asignatura:}
+Esta clase implementa el Comparable esto para definir que los objetos creados son comparables y así admitir el método CompareTo. La clase posee tres atributos un entero de clase contador que contendrá la cantidad de objetos creados, un String de instancia que contendrá el nombre de la asignatura y un entero de instancia que contendrá la clave de la asignatura; posee también sus métodos de acceso; dos constructores, uno para inicializar todos los atributos y otro para inicializar solo su clave (lo que nos servirá para la búsqueda binaria); un método de clase que sirve para instanciar el objeto, devolviéndolo ya con todos los datos solicitados; 3 métodos sobrescritos, el método ToString que maneja el formato de impresión del objeto y sus atributos, el método equals que servirá para en la búsqueda lineal solo comparar las claves y determinar si el objeto comparte la misma clave o no, y el método CompareTo que nos servirá para poder determinar cuando un objeto es mayor que otro según el atributo elegido para comparar esto nos servirá para la búsqueda binaria.
+\paragraph{Clase Main:}
+Esta clase es el menú donde se ejecutarán todas las opciones, este menú contiene dos Linked List una de alumnos y otra de asignaturas para tener guardados todos los objetos en los que se buscará, posteriormente se despliega un menú que muestra todas las opciones disponibles:
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Menu.png}
+    \caption{Opciones del menú}
+    
+\end{figure}
+\subsubsection{Búsqueda Lineal}
+Para la búsqueda lineal, en su clase se crearon los atributos privados:
+\textbf{Boolean rb
+LinkedList<Integer> ind
+int c=0}
+
+Estos atributos nos servirán para guardar los datos que necesitamos, es decir, si el objeto es encontrado en rb se guardará un True, en la LinkedList se guardaran todas las posiciones en las que el objeto es encontrado y en el entero se guardaran la cantidad de veces que el elemento haya sido encontrado.
+
+El método que realiza la búsqueda llamado BLB, devuelve un objeto de tipo BL, esto porque el objeto BL será aquel que contenga los atributos mencionados y los mostrará como salida en el programa.
+
+El método BLB, recibe un Object y una List<?>, es decir, recibe dos tipos genéricos uno de objeto y otro de lista, su propósito es que este mismo método pueda recibir una lista de Asignaturas o una lista de Alumnos y el objeto genérico recibe como objeto el atributo que se va a comparar para hacer la búsqueda, en caso de un Alumno recibirá un String y en caso de Asignatura recibirá un Integer.
+La parte esencial del código es la siguiente:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Imagen2.png}
+    \caption{Funcionamiento interno del codigo}
+    \label{fig:enter-label}
+\end{figure}
 
 
 \chapter{Conclusiones}
