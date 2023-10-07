@@ -529,12 +529,38 @@ Este método lo que hace es regresar un valor negativo si el objeto es menor, un
 Para cada llamada recursiva se va definiendo nuevamente b para ir alineando el index que debe llevar según como se parta la lista en caso de que la lista vaya hacia los indices después del valor central se usa una variable auxiliar que evalúa si el valor si fue encontrado para que la variable que registra el índice se ajuste y si no devuelva -1 sin el ajuste del índice pues no es necesario ya que no encontró el valor.
 
 Al final devuelve el index en el que encontró el elemento, este elemento puede ser el de en medio, la primera incidencia o la última incidencia por lo que para encontrarlas todas se usa el método EncontrarIndicesdetodaslasincidencias.
+\paragraph{Metodo Encontrar Índices de todas las incidencias:}
+Este método devuelve una lista de enteros, recibe un objeto genérico comparable, una lista de objetos genéricos comparables y el índice generado por el metodo de busqueda binaria; solo funciona si se encontró por lo menos una incidencia en el método de búsqueda binaria, es decir, si el valor regresado por el método de búsqueda binaria es mayor o igual que cero.
+Sino devolverá la lista vacía.
+Se crea una Linkedlist llamada index.
+Añade el índice recibido como parámetro a index y define dos enteros lb (límite izquierdo) y rbound (límite derecho) los cuales se mueven desde donde está el indice encontrado, hacia la izquierda en caso de lb y hasta la derecha en caso de rb así hasta que los índices se topen con un valor distinto al que se busca para esto se utilizan los métodos compareto ya mencionados anteriormente, cada que encuentra un elemento igual añade la variable de límite a la lista index pues estas variables representan los índices de la lista, así hasta que ambos límites se hayan encontrado con un valor distinto al buscado o se hayan llegado a los límites de la lista.
+Retorna la lista index la cual contiene todos los índices localizados.
+\paragraph{Menú:}
+El método recibe dos listas, la lista de alumnos y la lista de asignaturas, define un objeto genérico v una linkedlist de objetos genéricos comparables, sortea ambas listas con ayuda del collections.sort().
+Le solicita al usuario que decidirá buscar, en caso de que busque un alumno por nombre la lista de alumnos se casteara a (LinkedList\(<\)T\(>\)) y se asignará a la lista genérica, aquí es donde entra el constructor de que solo inicializa el nombre pues, se necesitará que este objeto genérico contenga un objeto del mismo tipo que se va a buscar, pues el método compareto solo admite comparaciones con objetos del mismo tipo, pero solo inicializamos el nombre porque es el único atributo que consideraremos, en caso de que el usuario escoja buscar asignatura por nombre realiza lo mismo pero con el constructor de asignatura.
+Una vez esto, imprime la lista ordenada y ejecuta el método de ordenamiento por búsqueda binaria, devolviendo el primer índice encontrado, posteriormente se crea una lista de enteros denominada Index que será la lista que devolverá el método que encontrará las demás incidencias.
+Ahora el usuario tendrá la posibilidad de escoger que quiere mostrar
+\begin{enumerate}
+    \item Búsqueda Booleana (Encontrado, No encontrado)
+    \item Índice encontrado (Los índices y los objetos en cada índice pues estos pueden tener sus demás atributos diferentes)
+    \item Cuántas veces fue encontrado (Mostrara el numero de veces que fue encontrado)
+    \item Imprime todos los datos.(Mostrara el numero de veces, los índices y los objetos en cada índice pues estos pueden tener sus demás atributos diferentes)
+\end{enumerate}
+\paragraph{Método sistema de impresión:}
+Este método recibe la lista de índices y una lista de genéricos para así imprimir todos los índices que contienen tal objeto y el objeto que se encuentra en ese índice utilizando el método toString.
+\subsubsection{Ejecución:}
 
-
-
-
-
-
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen3.png}
+    \caption{Paquetes y Clase Main:}
+  
+\end{figure}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\linewidth]{Imagen4.png}
+    \caption{Menu}
+\end{figure}
 \chapter{Conclusiones}
 \textbf{Hernandez Gallardo Daniel Alonso} \\
 \newpage
