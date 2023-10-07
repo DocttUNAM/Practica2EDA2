@@ -2,12 +2,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[Bjornstrup]{fncychap}
 \usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage[spanish]{babel}
-\usepackage{nicematrix}
 \usepackage{apacite}
-
+\usepackage{array}
+\usepackage{hyperref}
 \bibliographystyle{apacite}
 \selectlanguage{spanish}
 \input{Portada.tex}
@@ -24,17 +22,25 @@
 
 
   \begin{abstract}
+This project is based on prior research that focuses on the main collections in Java and their class hierarchies. In this research, implementations of lists, hash tables, and sets in Java are explored, along with their key differences.
 
+The class hierarchy in Java starts with the java.util.Collection interface, which has subinterfaces such as List, Set, and Map. Each of these subinterfaces represents different types of collections with unique characteristics. For instance, List allows duplicates and maintains a specific order, Set disallows duplicates, and Map represents a collection of key-value pairs.
+
+Within these categories, specific implementations were investigated. Regarding lists, ArrayList, LinkedList, and Vector were examined, each with its advantages and specific use cases. In the context of hash tables, HashMap, LinkedHashMap, and TreeMap were considered, offering varying levels of performance and ordering. Additionally, in the realm of sets, HashSet, LinkedHashSet, and TreeSet were explored, each with its own duplication and ordering characteristics.
+
+This research lays the foundation for understanding data structures and collections in Java, which is essential for the development of search and chaining applications. The programs implement key comparison search algorithms such as linear search and binary search, in the context of comparable objects like Students and Subjects. Furthermore, collision resolution is explored through chaining in a simulated hash table, and an interactive interface is created to allow users to add elements to the table and view its contents.
   \end{abstract}
     
 
  
   \section*{Resumen}
-    Esta información presenta una aplicación sencilla de las transformaciones lineales en el estudio de la sincronización de sistemas físicos. Para comprender completamente la información presentada, se requiere cierto conocimiento teórico en el campo de las transformaciones lineales y la sincronización de sistemas físicos. Los conceptos clave incluyen las transformaciones lineales, sus propiedades, el concepto de núcleo o espacio nulo, la sincronización de sistemas, los grafos, los árboles de expansión dirigidos y las propiedades de la matriz Laplaciana. Estos conceptos brindan los fundamentos teóricos necesarios para comprender y analizar la aplicación de las transformaciones lineales en el estudio de la sincronización de sistemas físicos.
+ Este proyecto se basa en una investigación previa que se centra en las principales colecciones en Java y sus jerarquías de clases. En esta investigación, se exploran las implementaciones de listas, tablas hash y conjuntos (Set) en Java, así como las diferencias clave entre ellas.
 
-La sección de desarrollo incluye dos actividades. En la Actividad 1, se considera una red de 6 robots descrita por la segunda ley de Newton, y se presenta el grafo y la matriz de incidencia. Se calcula la matriz Laplaciana y se determinan sus valores propios y núcleo. En la Actividad 2, se analiza una red de 8 robots utilizando pasos similares. Se obtienen el grafo, la matriz de incidencia, la matriz Laplaciana, los valores propios y el núcleo. Se realizan simulaciones en MATLAB para visualizar la convergencia de los nodos en ambas actividades.
+La jerarquía de clases en Java comienza con la interfaz java.util.Collection, que tiene subinterfaces como List, Set y Map. Cada una de estas subinterfaces representa diferentes tipos de colecciones con características únicas. Por ejemplo, List permite duplicados y mantiene un orden específico, Set no permite duplicados y Map representa una colección de pares clave-valor.
 
-En general, esta información proporciona una demostración práctica del uso de las transformaciones lineales y los conceptos de teoría de grafos para estudiar la sincronización de sistemas físicos.
+Dentro de estas categorías, se investigaron las implementaciones específicas. En el caso de listas, se examinaron ArrayList, LinkedList y Vector, cada una con sus ventajas y casos de uso particulares. En cuanto a las tablas hash, se consideraron HashMap, LinkedHashMap y TreeMap, que ofrecen diferentes niveles de rendimiento y ordenación. Además, en el contexto de conjuntos, se exploraron HashSet, LinkedHashSet y TreeSet, cada uno con sus propias características de duplicación y orden.
+
+Esta investigación sienta las bases para comprender las estructuras de datos y las colecciones en Java, lo que es esencial para el desarrollo de las aplicaciones de búsqueda y encadenamiento. Los programas implementan algoritmos de búsqueda por comparación de llaves, como búsqueda lineal y búsqueda binaria, en el contexto de objetos comparables, como Alumnos y Asignaturas. Además, se explora la solución de colisiones mediante el encadenamiento en una tabla hash simulada y se crea una interfaz interactiva para permitir a los usuarios agregar elementos a la tabla y ver su contenido.
 
 
 
@@ -64,11 +70,182 @@ En general, esta información proporciona una demostración práctica del uso de
       \subsection*{Jerarquía del Collection Framework en Java}El paquete java.util contiene todas las clases e interfaces que requiere el Collection Framework. Asimismo, el Collection Framework contiene una interfaz conocida como Iterable, la cual proporciona un iterador para recorrer todas las colecciones. Todas las colecciones que amplían la interfaz, aumentan al mismo tiempo el rango del iterador y los métodos de esta. La siguiente imagen ilustra la jerarquía del Collection Framework.
     \begin{figure}[h]
     \centering
-    \includegraphics[width=1\linewidth]{Collection-Framework-1.png}
-    \caption{GeeksforGeeks. (2023). Jerarquía del Collection Framework en Java[PNG].GeeksforGeeks.}
+    \includegraphics[width=1\linewidth]{Collection-Framework-2.png}
+    \caption{GeeksforGeeks. (2023). Jerarquía del Collection Framework en Java[PNG].GeeksforGeeks
+\href{https://media.geeksforgeeks.org/wp-content/uploads/20230124151239/Collections-in-Java-768.png}{https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200811210521/Collection-Framework-1.png}.}
 \end{figure}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Collection-Framework-2.png}
+    \caption{GeeksforGeeks. (2023). Jerarquía del Collection Framework en Java [PNG]. GeeksforGeeks https://media.geeksforgeeks.org/wp-content/cdn-uploads/20200811210611/Collection-Framework-2.png. }
+\end{figure}
 \newpage
+Antes de profundizar en los diferentes componentes del modelo, es importante recordar los conceptos de clase e interfaz.
+\begin{itemize}
+    \item \textbf{Clase:}una clase es un modelo o prototipo definido por el usuario a partir del cual se van a crear objetos. En esta, se representa un conjunto de atributos y métodos que serán comunes para todos los objetos de la clase.
+
+    \item \textbf{Interfaz:} al igual que una clase, una interfaz puede tener métodos y atributos, pero los métodos declarados en una interfaz son abstractos por defecto. Entonces, las interfaces especifican qué debe hacer una clase más no el cómo, es decir, son la plantilla de la clase.
+\end{itemize}
+    \subsection*{Clase contra Interfaz}
+    
+    
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{7cm}|p{7cm}|} 
+\hline  
+\textbf{Clase} & \textbf{Interfaz}\\ 
+\hline  
+Una clase es un prototipo definido por el usuario para construir objetos en Java.& Una interfaz es un modelo definido por el usuario que describe la estructura de cada clase que la implementa.\\ 
+\hline  
+Una interfaz es un modelo definido por el usuario que describe la estructura de cada clase que la implementa.& No se puede utilizar para instanciar objetos.\\ 
+\hline  
+Una clase puede tener modificadores de acceso públicos y predeterminados.& Una Interfaz puede tener modificadores de acceso públicos y predeterminados.\\ 
+\hline  
+Las clases pueden ser concretas o abstractas.& Todas las interfaces son abstractas.\\ 
+\hline  
+Una clase consta de constructores, métodos y atributos. Los métodos están definidos en una clase.& Una interfaz consta de atributos y métodos. Los métodos no están definidos en una interfaz, sólo contiene sus prototipos.\\ 
+\hline 
+\end{tabular}
+\caption{Comparación entre Clase e Interfaz en Java}
+\label{tab:my_label}
+\end{table}
+\subsection*{Métodos de la interfaz Collection}
+Esta interfaz contiene varios métodos que pueden ser utilizados por todas las colecciones que implementan esta interfaz. Los cuales son:
+\begin{itemize}
+    \item \textbf{add(Object)} se utiliza para agregar un objeto a la colección.
+    \item \textbf{addAll(Collection c)} agrega todos los elementos de la colección que se recibe como parámetro a la colección.
+    \item \textbf{clear()} elimina todos los elementos de la colección.
+    \item \textbf{contains(Object o)} devuelve verdadero si la colección contiene el objeto especificado.
+    \item \textbf{containsAll(Collection c) }devuelve verdadero si la colección contiene todos los elementos de la colección que recibe como parámetro.
+    \item \textbf{equals(Object o)} compara el objeto especificado con la colección para determinar la igualdad.
+    \item \textbf{hashCode()} se utiliza para devolver el valor del código hash para esta colección, es decir, el identificador de 32 bits que se almacena en un Hash en la instancia de la clase.
+    \item \textbf{isEmpty()} devuelve verdadero si la colección no contiene elementos.
+    \item \textbf{iterator()} devuelve un iterador sobre los elementos de esta colección.
+    \item \textbf{max()} se utiliza para devolver el valor máximo presente en la colección.
+    \item \textbf{parallelStream()} devuelve un Stream paralelo con esta colección como fuente, dicho de otra manera, este genera un Stream donde cada elemento no depende de otro para ser procesado.
+    \item \textbf{remove(Object o)} se utiliza para eliminar el objeto dado de la colección. Sin embargo, si hay valores duplicados, este método elimina la primera aparición del objeto.
+    \item \textbf{removeAll(Collection c)} se utiliza para eliminar de la colección todos los objetos contenidos en la colección que recibe como parámetro.
+    \item \textbf{removeIf(Predicate filter)} se utiliza para eliminar todos los elementos de esta colección que satisfacen el predicado dado.
+    \item \textbf{retainAll(Collection c)} se utiliza para conservar sólo los elementos de la colección que están contenidos en la colección especificada.
+    \item \textbf{size()} se utiliza para conocer la cantidad de elementos de la colección.
+    \item \textbf{spliterator()} se utiliza para crear un Spliterator sobre los elementos de esta colección, el cual nos permite recorrer y dividir una secuencia de elementos.
+    \item \textbf{stream()} devuelve un Stream secuencial con la  colección como fuente, el cual permite operar con la colección y hacer que el procesamiento masivo de datos sea rápido y fácil de leer.
+    \item \textbf{toArray()} devuelve un array que contiene todos los elementos de la colección.
+\end{itemize}
+    \subsection*{Interfaces y clases del Collection Framework}
+     
+    \subsubsection*{Interfaz Iterable}
+Esta interfaz es la raíz de todo el Collection Framework. Como se observa en la imagen, la interfaz de Collection amplía la interfaz Iterable. Por lo tanto, todas las interfaces y clases implementan esta interfaz. La función principal de esta interfaz es proporcionar un iterador para las colecciones. De ahí que, esta interfaz contiene sólo un método abstracto que es el iterador.
+\subsubsection{Interfaz Collection}
+Como ya se mencionó, esta interfaz amplía la interfaz Iterable y a su vez amplia la implementación de todas las clases en el Collection Framework. Esta interfaz contiene todos los métodos básicos que tiene cada colección, como agregar datos a la colección, eliminar datos, borrar datos. Todos estos métodos se implementan en esta interfaz porque estos son usados por todas las clases independientemente de su lógica. Además, tener estos métodos en esta interfaz garantiza que los nombres de los métodos sean universales para todas las colecciones. Por consiguiente, esta interfaz construye una base sobre la cual se implementan las clases del resto de interfaces.
+\subsubsection{Interfaz List}
+Esta es una interfaz secundaria de la interfaz de Collection. Se enfoca en las clases que son una colección secuencial en la que el usuario de la interfaz tiene control sobre cualquier elemento que es insertado a la lista. Además, el usuario puede acceder a sus elementos por un índice entero o buscar algún elemento en la lista. Por otra parte, a diferencia de la interfaz Set, la interfaz List si permite que haya elementos repetidos junto con varios elementos nulos. De ahí que esta interfaz está implementada por clases como ArrayList, Vector, Stack y LinkedList. En consecuencia, podemos crear una instancia de un objeto de List con cualquiera de las clases mencionadas.
+\paragraph{Clase ArrayList}
+Esta clase implementa una lista como un arreglo al que se le puede cambiar el tamaño, junto con todas las operaciones opcionales de la lista e igual permite todos los elementos, incluido null. Asimismo, provee métodos que manipulan el tamaño del arreglo interno usado para almacenar la lista. Por lo que, esta clase es similar a la clase Vector, solo que no está sincronizada, es decir, que múltiples subprocesos pueden operar en un ArrayList al mismo tiempo para hacer un ArrayList seguro para subprocesos. Sin embargo, se puede sincronizar externamente usando el método Collections.synchronizedList().
+\paragraph{Clase Vector}
+Esta clase implementa una variedad creciente de objetos. Al igual que una matriz, contiene elementos a los que se puede acceder mediante un índice entero. Sin embargo, el tamaño de un Vector puede aumentar o disminuir según se requiera para permitir las operaciones de adición y eliminación de elementos una vez que ya se creó un objeto de la clase. Al igual que la clase ArrayList, esta clase también permite todos los elementos, incluido null.  Además, como ya se mencionó anteriormente, la clase Vector si es sincronizada, lo cual implica que sólo un único subproceso puede operar en un método de Vector a la vez.
+\paragraph{Clase Stack}
+La clase Stack representa una pila de objetos donde el último en entrar, es el primero en salir (LIFO). Por ende, cuando se crea una pila por primera vez, no contiene elementos. Asimismo, amplía la clase Vector con cinco operaciones que permiten tratar un vector como una pila. 
+\begin{itemize}
+    \item \textbf{empty()} prueba si la pila está vacía.
+    \item \textbf{peek() }mira el objeto en la parte superior de la pila sin sacarlo de la pila.
+    \item \textbf{pop()} elimina el objeto en la parte superior de la pila y devuelve ese objeto como el valor de esta función.
+    \item \textbf{push(E item)} agrega un elemento a la parte superior de la pila.
+    \item \textbf{search(Object o)} devuelve la posición basada en 1 de donde se encuentra un objeto en la pila.
+\end{itemize}
+\paragraph{Clase LinkedList}
+Esta clase es la implementación de una lista doblemente ligada de las interfaces List y Deque. Incluye todas las operaciones de lista opcionales y permite todos los elementos (incluido null). Además, todas las operaciones se realizan como se podría esperar en una lista doblemente ligada. Por otro lado, las operaciones que indexan la lista recorrerán la lista desde el principio o el final, de acuerdo con lo que esté más cerca del índice especificado. Hay que tener en cuenta que esta implementación no está sincronizada, es decir, si varios subprocesos acceden a una LinkedList al mismo tiempo y al menos uno de los subprocesos modifica la lista estructuralmente, debe sincronizarse externamente.
+
+\subsubsection*{Aspectos a tomar en cuenta para elegir alguna de las clases de List}
+Como se vio anteriormente, las clases ArrayList, LinkedList, Vector y Stack son todas implementaciones de la interfaz List, pero se utilizan en diferentes situaciones debido a sus características y rendimiento. Por ende, conviene tener en cuenta algunos aspectos para saber cuándo conviene usar cada una.
+\begin{itemize}
+    \item ArrayList:
+    \begin{itemize}
+     \item Se suele utilizar cuando se necesita una lista dinámica que se puede redimensionar y acceder rápidamente a sus elementos con un índice. En consecuencia, la clase ArrayList es la elección más común.
+      \item En cuanto al rendimiento, esta clase ofrece un acceso rápido a elementos por índice, sin embargo, puede ser menos eficiente al insertar o eliminar elementos que se encuentran al medio de la lista debido a que se tienen que desplazar elementos.
+    \end{itemize}
+
+
+    \item LinkedList:
+    \begin{itemize}
+    \item Se recomienda utilizar cuando vas a insertar o eliminar de manera frecuente elementos al medio de la lista, ya que en este aspecto la clase LinkedList puede ser más eficiente que la clase ArrayList. También es útil cuando se requiere iterar sobre la lista en ambas direcciones, es decir del inicio al final o del final al inicio.
+    \item Ahora bien, el rendimiento en cuanto a insertar y eliminar elementos en la clase LinkedList es más rápido que en la clase ArrayList, pero el acceso aleatorio es más lento.
+        \end{itemize}
+    \item Vector:
+    \begin{itemize}
+    \item Se utiliza con menos frecuencia en las aplicaciones modernas. Es similar a la clase ArrayList, pero esta clase si es sincronizada, lo que significa que es segura para el uso de hilos múltiples. Por ello, si necesitas una lista sincronizada, puedes considerar usar la clase Vector. De lo contrario, es preferible usar ArrayList.
+    \item En lo que al rendimiento se refiere, a causa de la sincronización, la clase 
+    Vector puede ser más lenta que la clase ArrayList en operaciones sin hilos múltiples.
+      \end{itemize}
+    \item Stack:
+    \begin{itemize}
+    \item Se recomienda usar si necesitas una estructura de datos tipo LIFO (Last In, First Out). Sin embargo, es preferible usar la interfaz Deque con la clase LinkedList o ArrayDeque en lugar de la clase Stack, ya que el uso de esta clase no se aconseja desde Java 1.5.
+    
+    \item El rendimiento suele ser aceptable para operaciones de apilar y desapilar, no obstante, se debe tener en cuenta que la interfaz Deque ofrece una mayor flexibilidad y opciones.
+      \end{itemize}
+\end{itemize}
+\subsubsection{Interfaz Queue}
+La interfaz Queue mantiene la lógica FIFO donde el primero en entrar, es el primero en salir, lo cual es similar a una cola de espera en el mundo real. Por ello, esta interfaz está dedicada a almacenar elementos donde el orden de los elementos sí importa. Por ejemplo, cuando queremos reservar un boleto, los boletos se venden por orden de llegada. Por lo tanto, la persona cuya solicitud llega primero a la cola obtiene el billete antes que los demás. En este sentido, hay clases como PriorityQueue, ArrayDeque y LinkedList para implementar la interfaz Queue, por lo que, se puede crear una instancia con cualquiera de estas clases.
+\paragraph{Clase PriorityQueue}
+Esta clase permite usar la lógica de una cola de prioridad ilimitada, la cual se basa en un Heap de prioridad. Además, los elementos de la cola de prioridad se ordenan según su orden natural, o de acuerdo con un parámetro Comparator proporcionado en el momento de la construcción de la cola, conforme al constructor que se utilice. Lamentablemente, la PriorityQueue no permite elementos null. Asimismo, como se basa en el orden natural tampoco permite la inserción de objetos no comparables, ya que hacerlo puede resultar en ClassCastException.
+\paragraph{Interfaz Deque}
+Esta es una variación muy ligera de la interfaz Queue. Por ende, la interfaz Deque, también conocida como cola doble, es una interfaz con la que podemos agregar y eliminar elementos de ambos extremos de la cola. Como ya se mencionó, la interfaz Deque amplía la interfaz Queue. Por otro lado, las clases que implementan esta interfaz son ArrayDeque y LinkedList, por lo cual, podemos crear una instancia de alguna de estas clases.
+\paragraph{Clase ArrayDeque}
+Esta clase implementa un array redimensionable con la interfaz Deque que a su vez amplía la interfaz Queue. Un ArrayDeque no tiene restricciones de capacidad, porque crece según sea necesario para soportar el uso. Sin embargo, no son seguros para subprocesos, ya que en ausencia de sincronización externa, no admiten el acceso simultáneo de varios subprocesos. Además, los elementos nulos están prohibidos en esta clase. A pesar de lo anterior, es probable que esta clase sea más rápida que la clase Stack cuando se usa como pila y más rápida que la clase LinkedList cuando se usa como cola.
+\paragraph{Clase LinkedList}
+Esta clase es la implementación de una lista doblemente ligada de las interfaces List y Deque, la cual a su vez amplía la interfaz Queue. Incluye todas las operaciones de lista opcionales y permite todos los elementos (incluido null). Además, si se usa como una cola todas las operaciones se realizan como se podría esperar. Por otra parte, las operaciones que indexan la cola permiten recorrerla de inicio a fin o viceversa, según se requiera. Nuevamente, se debe tener en cuenta que esta implementación no está sincronizada, por lo cual, si varios subprocesos acceden a una LinkedList al mismo tiempo y al menos uno de los subprocesos modifica la lista estructuralmente, debe sincronizarse externamente.
+
+\subsubsection{Aspectos a tomar en cuenta para elegir alguna de las clases de Queue}
+De acuerdo con lo ya mencionado, elegir alguna de las clases PriorityQueue, ArrayDeque o LinkedList para implementar la interfaz Queue depende de nuestras necesidades y de las operaciones que planeamos realizar con la estructura de datos cola. Por consiguiente, conviene tener en cuenta algunos aspectos para determinar la clase que más nos convendrá usar para determinada aplicación.
+\begin{itemize}
+    \item PriorityQueue:
+    \begin{itemize}
+    \item Se recomienda usar cuando necesitas una cola de prioridad, es decir, cuando quieres que los elementos se almacenen y recuperen según un orden específico definido por su prioridad. Por lo anterior, los elementos se recuperan de la cola en orden ascendente o descendente de acuerdo con la prioridad que se haya definido.
+    \item En lo que al rendimiento se refiere, la PriorityQueue es eficiente para insertar y eliminar elementos según su prioridad, pero no es eficiente si necesitas acceder a elementos en posiciones arbitrarias o si la prioridad de los elementos cambia con frecuencia.
+    \end{itemize}
+    \item ArrayDeque:
+    \begin{itemize}
+    \item Cuándo quieres una cola doble para insertar y eliminar elementos de manera eficiente tanto al principio como al final, entonces la clase ArrayDeque es una excelente opción. Por otra parte, un objeto de esta clase se puede usar como una cola FIFO o una pila LIFO según tus necesidades.
+    \item El rendimiento de la clase ArrayDeque es muy eficiente para operaciones de inserción y eliminación en ambos extremos de la cola, pero no brinda un orden basado en una prioridad como la clase PriorityQueue.
+    \end{itemize}
+    \item LinkedList:
+    \begin{itemize}
+    \item Un objeto de la clase LinkedList puede usarse para implementar una cola FIFO o una pila LIFO. Sin embargo, generalmente es menos eficiente que la clase ArrayDeque para estas operaciones. A pesar de lo anterior, puedes considerar usar la clase LinkedList si necesitas una cola y también si deseas acceder a elementos en posiciones arbitrarias con frecuencia.
+    \item Respecto al rendimiento, la clase LinkedList es menos eficiente que la clase ArrayDeque para operaciones de inserción y eliminación en los extremos de la cola, pero es mejor si necesitas acceder a alimentos aleatorios.
+    \end{itemize}
+\end{itemize}
+\subsubsection{Interfaz Set}
+Un set es una colección desordenada de objetos en la que no se pueden almacenar elementos duplicados, es decir, un set no posee dos elementos e1 y e2 tal que se pueda usar el método e1.equals(e2). Esta interfaz se utiliza cuando deseamos evitar la duplicación de los objetos y deseamos almacenar sólo objetos únicos, con máximo un elemento nulo, puesto que, esta colección modela la abstracción matemática de un conjunto. Por ello, esta interfaz se puede implementar mediante  la creación de una instancia de alguna clase como HashSet, TreeSet y LinkedHashSet.
+\paragraph{Clase HashSet}
+Esta clase implementa la interfaz Set, y a su vez está respaldada por una tabla hash, la cual en realidad es una instancia de la clase HashMap. Sin embargo, esta clase no ofrece garantía en cuanto al orden de iteración del conjunto; en particular, no garantiza que el orden se mantendrá constante en el tiempo. Asimismo, esta clase si permite el elemento null. Por otra parte, tiene un rendimiento de tiempo constante para las operaciones de inserción y eliminación promedio. Finalmente, hay que tener en cuenta que esta implementación no está sincronizada, dicho de otra forma, si varios subprocesos acceden a un HashSet al mismo tiempo y al menos uno de los subprocesos lo modifica, se debe sincronizar externamente.
+Por lo general, esto se logra mediante la sincronización de algún objeto que encapsule naturalmente el HashSet. Si no existe tal objeto, el HashSet debe ajustarse utilizando el método Collections.synchronizedSet. Es mejor hacerlo en el momento de la creación, para evitar el acceso accidental y no sincronizado al HashSet.
+\paragraph{Clase LinkedHashSet}
+Esta clase es la implementación de una tabla hash y una lista ligada de la interfaz Set, por lo cual, tiene un orden de iteración predecible. A diferencia de la clase HashSet, la clase LinkedHashSet mantiene una lista doblemente ligada que recorre todas sus entradas. Por lo cual, esta lista doblemente ligada define el orden de iteración, el cual es el orden en el que se insertaron los elementos en el Set. No hay que perder de vista que el orden de inserción no se ve afectado si un elemento se vuelve a insertar en el LinkedHashSet. En consecuencia, esta implementación evita los pedidos no especificados y generalmente caóticos que se generan con la clase HashSet, sin incurrir en el mayor costo asociado con la clase TreeSet.
+Por lo anterior, se puede utilizar la clase LinkedHashSet para generar una copia de un Set que tenga el mismo orden que el original, independientemente de la implementación del conjunto original.
+\subsubsection{Interfaz SortedSet}
+Esta interfaz es muy similar a la interfaz Set. La única diferencia es que esta interfaz tiene métodos adicionales que mantienen el orden de los elementos. Por consiguiente, la interfaz SortedSet amplía la interfaz Set y se utiliza para manejar los datos que deben ordenarse. La clase que implementa esta interfaz es TreeSet, por lo que se puede crear una instancia con esta clase para usar la interfaz SortedSet.
+\subsubsection{Interfaz NavigableSet}
+La interfaz NavigableSet se extiende desde la interfaz SortedSet. Además de los métodos de la interfaz SortedSet, la interfaz NavigableSet tiene métodos de navegación que brindan coincidencias más cercanas, como floor, ceiling, lower y higher. Un NavigableSet se puede recorrer en orden ascendente y descendente. Aunque permite el uso elementos nulos, no se recomienda, ya que estos elementos pueden generar resultados ambiguos.
+\paragraph{Clase TreeSet}
+Esta clase implementa la interfaz Set, SortedSet y NavigableSet utilizando una estructura de árbol, normalmente un Red-Black Tree, pues se usa para administrar el orden. Por defecto, se tiene un orden ascendente, pero se puede cambiar usando un Comparator. Además, su complejidad temporal asintótica es de O(log n) para sus operaciones de inserción, eliminación y búsqueda. Por otra parte, al igual que la clase HashSet esta clase tampoco es sincronizada, por lo que, si se quiere sincronizar se debe hacer de la misma forma que se hace con un objeto de la clase HashSet. Además, dada la naturaleza de este Set, se tienen algunos métodos exclusivos a la hora de implementarlo.
+\begin{itemize}
+    \item \textbf{ceiling(E element)} devuelve el elemento más pequeño en el conjunto que es mayor o igual al elemento especificado.
+    \item \textbf{floor(E element)} devuelve el elemento más grande en el conjunto que es menor o igual al elemento especificado.
+    \item \textbf{higher(E element)} devuelve el elemento más pequeño en el conjunto que es estrictamente mayor que el elemento especificado.
+    \item \textbf{lower(E element)} devuelve el elemento más grande en el conjunto que es estrictamente menor que el elemento especificado.
+    \item \textbf{pollFirst()} recupera y elimina el primer elemento más pequeño en el conjunto.
+    \item \textbf{pollLast()} recupera y elimina el último elemento más grande en el conjunto.
+    \item \textbf{descendingSet()} devuelve una vista inversa del conjunto, donde los elementos se almacenan en orden inverso.
+\end{itemize}
+
+
+
+
+
+
+
+
 \chapter{Desarrollo}
 
 \chapter{Conclusiones}
